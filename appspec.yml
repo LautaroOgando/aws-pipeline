@@ -13,8 +13,8 @@ permissions:
       - file
   - object: /var/www/html/logandoportfolio/
     pattern: "**"
-    owner: ubuntu
-    group: ubuntu
+    owner: root
+    group: root
     mode: 755
     type:
       - directory
