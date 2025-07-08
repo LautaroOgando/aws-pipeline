@@ -19,12 +19,6 @@ permissions:
     type:
       - directory
 hooks:
-  # Opcional: Limpia el directorio antes de copiar los nuevos archivos
-  BeforeInstall:
-    - location: scripts/clean_install.sh
-      timeout: 60
-      runas: root
-
   AfterInstall:
     - location: scripts/restart_web_server.sh
       timeout: 300
