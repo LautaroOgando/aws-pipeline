@@ -6,8 +6,8 @@ files:
 permissions:
   - object: /var/www/html/logandoportfolio/
     pattern: "**"
-    owner: ubuntu # <--- AJUSTA ESTO SI TU USUARIO ES DIFERENTE
-    group: ubuntu # <--- AJUSTA ESTO SI TU GRUPO ES DIFERENTE
+    owner: root # <--- AJUSTA ESTO SI TU USUARIO ES DIFERENTE
+    group: root # <--- AJUSTA ESTO SI TU GRUPO ES DIFERENTE
     mode: 644
     type:
       - file
@@ -22,9 +22,9 @@ hooks:
   # Opcional: Limpia el directorio antes de copiar los nuevos archivos
   BeforeInstall:
     - location: scripts/clean_install.sh
-      timeout: 300
+      timeout: 60
       runas: root
-  # Opcional: Reinicia tuP1+r6B34=1B4F53\P1+r6B35=1B5B31357E\P1+r6B36=1B5B31377E\P1+r6B37=1B5B31387E\P1+r6B38=1B5B31397E\P1+r6B39=1B5B32307E\P1+r6B3B=1B5B32317E\P1+r4631=1B5B32337E\ servidor web después de copiar los archivos
+
   AfterInstall:
     - location: scripts/restart_webserver.sh
       timeout: 300
