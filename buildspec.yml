@@ -1,14 +1,10 @@
 version: 0.2
 phases:
   install:
-    runtime-versions:
-      nodejs: 18
-      python: 3.11
     commands:
-      - echo "Actualizando paquetes e instalando wget si es necesario..."
+      - echo "Actualizando paquetes e instalando wget y grep si es necesario..."
       - apt-get update -y
-      - apt-get install -y wget # wget es necesario para descargar
-      - apt-get install -y grep # Asegurarse de que grep esté disponible para -oP
+      - apt-get install -y wget grep # wget es necesario para descargar, grep para -oP
 
       - echo "Instalando Hugo..."
       # Cada comando se ejecuta individualmente o en bloques lógicos
@@ -27,8 +23,6 @@ phases:
       - sudo mv hugo /usr/local/bin/hugo
       - echo "Verificando la versión de Hugo instalada:"
       - hugo version
-      # Instalar npm y dependencias si tu proyecto las necesita
-      - npm install
 
   build:
     commands:
