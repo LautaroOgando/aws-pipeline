@@ -5,6 +5,10 @@ phases:
       nodejs: 18
       python: 3.11
     commands:
+      # Actualizar paquetes e instalar wget y sed
+      - apt-get update -y
+      - apt-get install -y wget sed
+
       # Descargar Hugo (asegúrate de que la URL y el sed sigan siendo correctos)
       - |
         LATEST_TAG=$(wget -qO- https://api.github.com/repos/gohugoio/hugo/releases/latest | sed -n 's/.*"tag_name": "\([^"]*\)".*/\1/p')
