@@ -1,25 +1,43 @@
 version: 0.2
 phases:
-  install: 
-   commands:
-      - echo "Instalando Hugo..."
+  install:
+    runtime-versions:
+      nodejs: 18
+      python: 3.11
+    commands:
+      - echo "Actualizando paquetes e instalando wget si es necesario..."
       - apt-get update -y
-      - apt-get install -y wget
-      - |
-        HUGO_VERSION=$(wget -qO- https://api.github.com/repos/gohugoio/hugo/releases/latest | grep -oP '"tag_name": "\Kv[^"]+'
+      - apt-get install -y wget # wget es necesario para descargar
+      - apt-get install -y grep # Asegurarse de que grep esté disponible para -oP
 
+      - echo "Instalando Hugo..."
+      # Cada comando se ejecuta individualmente o en bloques lógicos
+      - |
+        #!/bin/bash
+        HUGO_VERSION=$(wget -qO- https://api.github.com/repos/gohugoio/hugo/releases/latest | grep -oP '"tag_name": "\Kv[^"]+')
+        echo "Última versión de Hugo detectada: ${HUGO_VERSION}"
+      - |
+        #!/bin/bash
         HUGO_TARBALL="hugo_extended_${HUGO_VERSION#v}_linux-amd64.tar.gz"
-      - wget https://github.com/gohugoio/hugo/releases/download/${HUGO_VERSION}/${HUGO_TARBALL}
+        echo "Descargando ${HUGO_TARBALL}..."
+        wget "https://github.com/gohugoio/hugo/releases/download/${HUGO_VERSION}/${HUGO_TARBALL}"
+      - echo "Extrayendo Hugo..."
       - tar -xzf ${HUGO_TARBALL} hugo
-      - mv hugo /usr/local/bin/hugo
+      - echo "Moviendo Hugo a /usr/local/bin..."
+      - sudo mv hugo /usr/local/bin/hugo
+      - echo "Verificando la versión de Hugo instalada:"
       - hugo version
+      # Instalar npm y dependencias si tu proyecto las necesita
+      - npm install
+
   build:
     commands:
       - echo "Construyendo sitio Hugo..."
       - hugo
+
 artifacts:
   files:
     - '**/*' # Incluye todos los archivos generados por Hugo dentro de 'public'
-    - 'appspec.yml' # <--- ¡AÑADIDO! Incluye el appspec.yml desde la raíz del repositorio
-    - 'scripts/**/*' # <--- ¡AÑADIDO! Incluye todos los scripts de la carpeta 'scripts'
+    - 'appspec.yml' # Incluye el appspec.yml desde la raíz del repositorio
+    - 'scripts/**/*' # Incluye todos los scripts de la carpeta 'scripts'
   base-directory: public # La carpeta 'public' será la raíz del contenido web en el artefacto
