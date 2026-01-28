@@ -1,13 +1,13 @@
 version: 0.0
 os: linux
 files:
-  - source: / # Esto significa todo el contenido del artefacto de CodeBuild
+  - source: / 
     destination: /var/www/html/logandoportfolio/ # Tu carpeta de destino en EC2
 permissions:
   - object: /var/www/html/logandoportfolio/
     pattern: "**"
-    owner: root # <--- AJUSTA ESTO SI TU USUARIO ES DIFERENTE
-    group: root # <--- AJUSTA ESTO SI TU GRUPO ES DIFERENTE
+    owner: root 
+    group: root 
     mode: 644
     type:
       - file
